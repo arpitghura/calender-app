@@ -1,5 +1,7 @@
+'use client';
 import { ActivityTopBar } from "@/components/ActivityTopBar";
 import { CalenderBoard } from "@/components/CalenderBoard";
+import { CreateEvent } from "@/components/CreateEvent";
 import { WeekDaysTopBar } from "@/components/WeekDaysTopBar";
 import moment from "moment";
 
@@ -40,6 +42,7 @@ export default function Home() {
         // firstDayNumber="4"
         firstDayNumber={moment().startOf("month").format("d")}
       />
+      <CreateEvent isOpen={true} onClose={() => console.log("Close")} handleCreateEvent={() => console.log("Create Event")}/>
     </main>
   );
 }
