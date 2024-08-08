@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import { ActivityTopBar } from "@/components/ActivityTopBar";
 import { CalenderBoard } from "@/components/CalenderBoard";
@@ -7,7 +7,6 @@ import { WeekDaysTopBar } from "@/components/WeekDaysTopBar";
 import { Modal } from "@/utils/Modal";
 import moment from "moment";
 import { useSearchParams, useRouter } from "next/navigation";
-
 
 // const items = [
 //   {
@@ -36,28 +35,24 @@ export default function Home() {
   const router = useRouter();
   console.log(moment().startOf("month").format("d"));
   const showModal = useSearchParams().get("showModal");
+  // const firstDayNumber = moment().startOf("month").day()?.toString();
+  // const is31stMonth = moment().daysInMonth() === 31;
 
   return (
-<>
-    {/*<main className="flex flex-col gap-0">*/}
+    <>
       <ActivityTopBar />
       <WeekDaysTopBar />
       <CalenderBoard
-        is31stMonth={moment().daysInMonth() === 31}
+        // is31stMonth={is31stMonth}
+        // firstDayNumber={firstDayNumber}
         //items={items}
-        // firstDayNumber="4"
-        firstDayNumber={moment().startOf("month").format("d")}
       />
 
       {showModal && (
-        <Modal
-          onClose={() => router.back()}
-          modalTitle="Create New Event"
->
-  <CreateNewEvent/>
-  </Modal>
+        <Modal onClose={() => router.back()} modalTitle="Create New Event">
+          <CreateNewEvent />
+        </Modal>
       )}
-    {/* </main>*/}
     </>
   );
 }
