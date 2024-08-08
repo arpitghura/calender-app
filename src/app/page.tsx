@@ -1,9 +1,13 @@
 'use client';
+
 import { ActivityTopBar } from "@/components/ActivityTopBar";
 import { CalenderBoard } from "@/components/CalenderBoard";
-import { CreateEvent } from "@/components/CreateEvent";
+import { CreateNewEvent } from "@/components/CreateNewEvent";
 import { WeekDaysTopBar } from "@/components/WeekDaysTopBar";
+import { Modal } from "@/utils/Modal";
 import moment from "moment";
+import { useSearchParams, useRouter } from "next/navigation";
+
 
 // const items = [
 //   {
@@ -29,12 +33,14 @@ import moment from "moment";
 // ]
 
 export default function Home() {
-  console.log(moment().date());
-  
+  const router = useRouter();
+  console.log(moment().startOf("month").format("d"));
+  const showModal = useSearchParams().get("showModal");
 
   return (
-    <main className="flex flex-col gap-0">
-      <ActivityTopBar/>
+<>
+    {/*<main className="flex flex-col gap-0">*/}
+      <ActivityTopBar />
       <WeekDaysTopBar />
       <CalenderBoard
         is31stMonth={moment().daysInMonth() === 31}
@@ -42,7 +48,16 @@ export default function Home() {
         // firstDayNumber="4"
         firstDayNumber={moment().startOf("month").format("d")}
       />
-      <CreateEvent isOpen={true} onClose={() => console.log("Close")} handleCreateEvent={() => console.log("Create Event")}/>
-    </main>
+
+      {showModal && (
+        <Modal
+          onClose={() => router.back()}
+          modalTitle="Create New Event"
+>
+  <CreateNewEvent/>
+  </Modal>
+      )}
+    {/* </main>*/}
+    </>
   );
 }

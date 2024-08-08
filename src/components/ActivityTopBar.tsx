@@ -1,13 +1,16 @@
 import { getAllMonthsInShortForm, getCurrentMonth } from "@/utils/getMonthData";
 import React from "react";
+import { useRouter } from "next/navigation";
 
 export const ActivityTopBar = () => {
+  const router = useRouter();
+
   const allMonths = getAllMonthsInShortForm;
   console.log(allMonths);
   const totalEventsForToday: number = 4;
 
   const handleNavigateToCreateEvent = () => {
-    console.log("Create Event");
+    router.push("/?showModal=true");
   };
 
   return (

@@ -15,7 +15,7 @@ const Dates30: number[] = Array.from({ length: 30 }, (_, i) => i + 1);
 export const CalenderBoard = ({
   is31stMonth,
   firstDayNumber,
-  items
+  items,
 }: CalenderBoardProps) => {
   // useEffect(() => {
   // }, [firstDayNumber]);
@@ -28,7 +28,7 @@ export const CalenderBoard = ({
               date={date}
               key={index}
               items={items}
-              className={`first-of-type:col-start-${firstDayNumber}`}
+              className={`first-of-type:]col-start-${firstDayNumber}`}
             />
           ))
         : Dates30?.map((date, index) => (
