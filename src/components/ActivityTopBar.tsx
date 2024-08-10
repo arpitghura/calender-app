@@ -1,17 +1,21 @@
-import { getAllMonthsInShortForm, getCurrentMonth } from "@/utils/getMonthData";
-import React from "react";
+import React, { useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { useAppContext } from "@/Context/AppContext";
 
 export const ActivityTopBar = () => {
   const router = useRouter();
+  const { items, getTodayDate, getAllMonthsInShortForm, getCurrentMonth } = useAppContext();
 
   const allMonths = getAllMonthsInShortForm;
-  console.log(allMonths);
-  const totalEventsForToday: number = 4;
 
   const handleNavigateToCreateEvent = () => {
     router.push("/?showModal=true");
   };
+
+  useEffect(() => {
+    let getAllTodayEvents = items.filter(item => item.date === getTodayDate)
+    console.log(getAllTodayEvents, "today events");
+  }, [items]);
 
   return (
     <div className="flex flex-row justify-between p-2">
@@ -26,7 +30,7 @@ export const ActivityTopBar = () => {
 
       <div>
         <p className="flex text-base items-center">
-          {totalEventsForToday} Events for Today
+          {items?.length} Events for Today
         </p>
       </div>
 

@@ -1,8 +1,13 @@
 "use client";
 
 import React, { useState } from "react";
+import { useAppContext } from "@/Context/AppContext";
+import { useRouter } from "next/navigation";
 
 export const CreateNewEvent = () => {
+  const { items, setItems } = useAppContext();
+  const router = useRouter();
+
   const [event, setEvent] = useState({
     title: "",
     date: "",
@@ -23,7 +28,11 @@ export const CreateNewEvent = () => {
 
   const handleCreateEvent = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(event);
+    const newEventArray = items;
+    newEventArray.push(event);
+
+    setItems(newEventArray);
+    router.back();
   };
 
   return (

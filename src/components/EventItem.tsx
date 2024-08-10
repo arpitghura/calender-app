@@ -3,19 +3,23 @@ import React from "react";
 export interface EventItemProps {
   title: string;
   description: string;
+  date: string;
   time: string;
   bgColor?: string;
+  hoverbgColor?: string;
 }
 
 export const EventItem = ({
   title,
   description,
   time,
-  bgColor = "bg-blue-600",
+  date,
+  bgColor,
+  hoverbgColor,
 }: EventItemProps) => {
   return (
     <div
-      className={`flex flex-col gap-0 m-0 px-1 w-full rounded-md text-white ${bgColor} overflow-clip`}
+      className={`flex flex-col gap-0 m-0 px-1 w-full rounded-md text-white ${hoverbgColor} bg-${bgColor}-600 overflow-clip cursor-pointer select-none`}
     >
       <h1 className="text-sm font-normal w-full text-ellipsis text-nowrap">
         {title}
@@ -24,8 +28,14 @@ export const EventItem = ({
         {description}
       </p>
       <p className="text-xs font-normal w-full text-ellipsis text-nowrap ">
-        {time}
+        {date} {time}
       </p>
     </div>
   );
+};
+
+// default props values
+EventItem.defaultProps = {
+  bgColor: "blue",
+  hoverbgColor: "hover:bg-sky-500",
 };
