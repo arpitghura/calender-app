@@ -1,18 +1,29 @@
-import React from "react";
+import React, { useEffect, useMemo } from "react";
 import { EventItem, EventItemProps } from "./EventItem";
 import { getToday } from "@/utils/getMonthData";
+import { useAppContext } from "@/Context/AppContext";
 
 export interface CalenderBlockProps {
-  items?: EventItemProps[];
   date: number;
   className?: string;
 }
 
-export const CalenderBlock = ({
-  items,
-  date,
-  className,
-}: CalenderBlockProps) => {
+export const CalenderBlock = ({ date, className }: CalenderBlockProps) => {
+  const { items } = useAppContext();
+
+  const filteredItems = (items: EventItemProps[]) =>
+    items?.filter(
+      (item: EventItemProps) => item.date.split("-")[2] == date.toString()
+    );
+
+  const filteredEvents = useMemo(() => {
+    let data;
+    if (items) {
+      data = filteredItems(items);
+    }
+    return data;
+  }, [items]);
+
   return (
     <div
       className={`flex flex-col border border-orange-400 max-w-[193px] aspect-square border-collapse ${className}`}
@@ -25,7 +36,7 @@ export const CalenderBlock = ({
         {date}
       </div>
       <div className="items flex flex-col gap-1 p-1 w-full h-full overflow-hidden">
-        {items?.map((item, index) => (
+        {filteredEvents?.map((item: EventItemProps, index: number) => (
           <EventItem key={index} {...item} />
         ))}
       </div>

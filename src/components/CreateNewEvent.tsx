@@ -2,11 +2,13 @@
 
 import React, { useState } from "react";
 import { useAppContext } from "@/Context/AppContext";
-import { useRouter } from "next/navigation";
 
-export const CreateNewEvent = () => {
+interface CreateNewEventProps {
+  onClose: () => void;
+}
+
+export const CreateNewEvent = ({ onClose }: CreateNewEventProps) => {
   const { items, setItems } = useAppContext();
-  const router = useRouter();
 
   const [event, setEvent] = useState({
     title: "",
@@ -28,11 +30,8 @@ export const CreateNewEvent = () => {
 
   const handleCreateEvent = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const newEventArray = items;
-    newEventArray.push(event);
-
-    setItems(newEventArray);
-    router.back();
+    setItems([...items, event]);
+    onClose();
   };
 
   return (

@@ -1,10 +1,18 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { useAppContext } from "@/Context/AppContext";
+import { EventItemProps } from "./EventItem";
 
 export const ActivityTopBar = () => {
   const router = useRouter();
-  const { items, getTodayDate, getAllMonthsInShortForm, getCurrentMonth } = useAppContext();
+  const {
+    items,
+    getTodayDate,
+    getAllMonthsInShortForm,
+    getCurrentMonth,
+    textColor,
+    hoverbgColor,
+  } = useAppContext();
 
   const allMonths = getAllMonthsInShortForm;
 
@@ -12,10 +20,10 @@ export const ActivityTopBar = () => {
     router.push("/?showModal=true");
   };
 
-  useEffect(() => {
-    let getAllTodayEvents = items.filter(item => item.date === getTodayDate)
-    console.log(getAllTodayEvents, "today events");
-  }, [items]);
+  const getAllTodayEvents = () =>
+    items.filter((item: EventItemProps) => item.date === getTodayDate);
+
+  const todayEvents = useMemo(() => getAllTodayEvents(), [items]);
 
   return (
     <div className="flex flex-row justify-between p-2">
@@ -28,14 +36,15 @@ export const ActivityTopBar = () => {
         ))}
       </select>
 
-      <div>
-        <p className="flex text-base items-center">
-          {items?.length} Events for Today
+      <div className="flex text-base items-center ">
+        <p>
+          <span className={textColor}>{todayEvents?.length}</span> Events for
+          Today
         </p>
       </div>
 
       {/* <div className="flex flex-row gap-2">
-            <button className="border border-gray-300 rounded-md p-1">Today</button>
+          <button className="border border-gray-300 rounded-md p-1">Today</button>
         </div> */}
 
       <div>

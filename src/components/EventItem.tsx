@@ -14,12 +14,12 @@ export const EventItem = ({
   description,
   time,
   date,
-  bgColor,
-  hoverbgColor,
+  bgColor = "blue",
+  hoverbgColor = "hover:bg-sky-500",
 }: EventItemProps) => {
   return (
     <div
-      className={`flex flex-col gap-0 m-0 px-1 w-full rounded-md text-white ${hoverbgColor} bg-${bgColor}-600 overflow-clip cursor-pointer select-none`}
+      className={`flex flex-col gap-0 m-0 px-1 w-full rounded-md text-white bg-blue-700 overflow-clip cursor-pointer select-none`}
     >
       <h1 className="text-sm font-normal w-full text-ellipsis text-nowrap">
         {title}
@@ -32,10 +32,4 @@ export const EventItem = ({
       </p>
     </div>
   );
-};
-
-// default props values
-EventItem.defaultProps = {
-  bgColor: "blue",
-  hoverbgColor: "hover:bg-sky-500",
 };

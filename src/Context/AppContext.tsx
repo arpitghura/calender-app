@@ -1,5 +1,13 @@
-"use client"
-import React, { createContext, useContext, ReactNode, useState, Dispatch, SetStateAction, useEffect } from "react";
+"use client";
+import React, {
+  createContext,
+  useContext,
+  ReactNode,
+  useState,
+  Dispatch,
+  SetStateAction,
+  useEffect,
+} from "react";
 import moment from "moment";
 import { EventItemProps } from "@/components/EventItem";
 import { useSearchParams } from "next/navigation";
@@ -14,6 +22,9 @@ export interface AppContextType {
   items: EventItemProps[];
   setItems: Dispatch<SetStateAction<EventItemProps[]>>;
   showCreateEventModal: boolean;
+  bgColor: string;
+  hoverbgColor: string;
+  textColor: string;
 }
 
 const AppWrapperDefaultValues: AppContextType = {
@@ -24,21 +35,28 @@ const AppWrapperDefaultValues: AppContextType = {
     'Jul', 'Aug', 'Sep',     
     'Oct', 'Nov', 'Dec'      
   ],
-  getCurrentMonth: 'Jan',
+  getCurrentMonth: "Jan",
   is31stMonth: true,
   firstDayNumber: "1",
-  items: [{
-    title: "Meeting with John",
-    time: "10:00 AM",
-    description: "Discuss about the project",
-    date: "2024-08-10"
-  }],
+  items: [
+    {
+      title: "Meeting with John",
+      time: "10:00 AM",
+      description: "Discuss about the project",
+      date: "2024-08-10",
+    },
+  ],
   getTodayDate: "2024-08-10",
   setItems: () => {},
   showCreateEventModal: false,
+  bgColor: "bg-orange-600",
+  textColor: "text-orange-600",
+  hoverbgColor: "hover:bg-orange-400",
 };
 
-const AppContext = createContext<AppContextType | undefined>(AppWrapperDefaultValues);
+const AppContext = createContext<AppContextType | undefined>(
+  AppWrapperDefaultValues
+);
 
 export function useAppContext() {
   const context = useContext(AppContext);
@@ -54,7 +72,9 @@ export interface AppWrapperProps {
 }
 
 export function AppWrapper({ children }: AppWrapperProps) {
-  const [items, setItems] = useState<EventItemProps[]>(AppWrapperDefaultValues.items);
+  const [items, setItems] = useState<EventItemProps[]>(
+    AppWrapperDefaultValues.items
+  );
 
   const sharedState: AppContextType = {
     getToday: moment().date(),
@@ -65,15 +85,14 @@ export function AppWrapper({ children }: AppWrapperProps) {
     getTodayDate: moment().format("YYYY-MM-DD"),
     items: items,
     setItems: setItems,
-    showCreateEventModal: useSearchParams().get("showModal") === null ? false : true,
+    showCreateEventModal:
+      useSearchParams().get("showModal") === null ? false : true,
+    bgColor: "bg-orange-600",
+    hoverbgColor: "hover:bg-orange-400",
+    textColor: "text-orange-600",
   };
-
-  // useEffect(()=>{
-  //   setItems(items);
-  // }, [items])
 
   return (
     <AppContext.Provider value={sharedState}>{children}</AppContext.Provider>
   );
 }
-

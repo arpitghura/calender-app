@@ -2,7 +2,6 @@
 import React, { useEffect } from "react";
 import { CalenderBlock } from "./CalenderBlock";
 import { EventItemProps } from "./EventItem";
-import moment from "moment";
 import { useAppContext } from "@/Context/AppContext";
 export interface CalenderBoardProps {
   is31stMonth?: boolean;
@@ -16,23 +15,21 @@ const Dates30: number[] = [
 ];
 
 export const CalenderBoard = () => {
-  const { firstDayNumber, is31stMonth, items } = useAppContext();
+  const { firstDayNumber, is31stMonth } = useAppContext();
 
-  useEffect(() => {
-  }, [firstDayNumber]);
+  useEffect(() => {}, [firstDayNumber]);
 
   return (
     <div className={`grid grid-cols-7 grid-rows-4 gap-0 m-0 p-0 w-full h-full`}>
       <CalenderBlock
         date={1}
         key={1}
-        items={items}
         className={`col-start-${firstDayNumber}`}
       />
-      {Dates30?.map((date, index) => (
-        <CalenderBlock date={date} key={index} items={items} />
+      {Dates30?.map((date) => (
+        <CalenderBlock date={date} key={date} />
       ))}
-      {is31stMonth && <CalenderBlock date={31} key={31} items={items} />}
+      {is31stMonth && <CalenderBlock date={31} key={31} />}
     </div>
   );
 };

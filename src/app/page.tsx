@@ -7,10 +7,13 @@ import { WeekDaysTopBar } from "@/components/WeekDaysTopBar";
 import { Modal } from "@/utils/Modal";
 import { useRouter } from "next/navigation";
 import { useAppContext } from "@/Context/AppContext";
+import { useEffect } from "react";
 export default function Home() {
   const router = useRouter();
-  const {showCreateEventModal} = useAppContext();
-  
+  const { showCreateEventModal } = useAppContext();
+
+  const onClose = () => router.back();
+
   return (
     <>
       <ActivityTopBar />
@@ -18,8 +21,8 @@ export default function Home() {
       <CalenderBoard />
 
       {showCreateEventModal && (
-        <Modal onClose={() => router.back()} modalTitle="Create New Event">
-          <CreateNewEvent />
+        <Modal onClose={onClose} modalTitle="Create New Event">
+          <CreateNewEvent onClose={onClose} />
         </Modal>
       )}
     </>
