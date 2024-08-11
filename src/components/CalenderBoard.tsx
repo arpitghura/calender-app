@@ -15,16 +15,16 @@ const Dates30: number[] = [
 ];
 
 export const CalenderBoard = () => {
-  const { firstDayNumber, is31stMonth } = useAppContext();
+  const { shiftColumnClass, is31stMonth } = useAppContext();
 
-  useEffect(() => {}, [firstDayNumber]);
+  useEffect(() => {}, [shiftColumnClass]);
 
   return (
     <div className={`grid grid-cols-7 grid-rows-4 gap-0 m-0 p-0 w-full h-full`}>
       <CalenderBlock
         date={1}
         key={1}
-        className={`col-start-${firstDayNumber}`}
+        className={shiftColumnClass}
       />
       {Dates30?.map((date) => (
         <CalenderBlock date={date} key={date} />

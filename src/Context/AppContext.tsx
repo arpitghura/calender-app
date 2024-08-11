@@ -11,6 +11,7 @@ import React, {
 import moment from "moment";
 import { EventItemProps } from "@/components/EventItem";
 import { useSearchParams } from "next/navigation";
+import { firstDayNumber } from "@/utils/getMonthData";
 
 export interface AppContextType {
   getToday: number;
@@ -25,6 +26,7 @@ export interface AppContextType {
   bgColor: string;
   hoverbgColor: string;
   textColor: string;
+  shiftColumnClass: string;
 }
 
 const AppWrapperDefaultValues: AppContextType = {
@@ -52,6 +54,7 @@ const AppWrapperDefaultValues: AppContextType = {
   bgColor: "bg-orange-600",
   textColor: "text-orange-600",
   hoverbgColor: "hover:bg-orange-400",
+  shiftColumnClass: "1",
 };
 
 const AppContext = createContext<AppContextType | undefined>(
@@ -82,6 +85,7 @@ export function AppWrapper({ children }: AppWrapperProps) {
     getCurrentMonth: moment().format("MMM"),
     is31stMonth: moment().daysInMonth() === 31,
     firstDayNumber: moment().startOf("month").day().toString(),
+    shiftColumnClass: `col-start-${firstDayNumber}`,
     getTodayDate: moment().format("YYYY-MM-DD"),
     items: items,
     setItems: setItems,
